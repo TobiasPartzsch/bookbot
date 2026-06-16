@@ -1,12 +1,25 @@
-from collections import defaultdict, Counter
+import operator
 
-def get_book_text(filepath):
-    with open(filepath) as f:
-        return f.read()
 
-def count_letters_without_case(txt):
-    counter = Counter(txt.lower())
-    return dict(counter)
+def get_num_words(text: str) -> int:
+    words = text.split()
+    return len(words)
 
-def sort_by_count(counter, reverse=True):
-    return sorted(counter.items(), key=lambda item: item[1], reverse=reverse)
+
+def get_chars_dict(text: str) -> dict[str, int]:
+    chars: dict[str, int] = {}
+    for c in text:
+        lowered = c.lower()
+        if lowered in chars:
+            chars[lowered] += 1
+        else:
+            chars[lowered] = 1
+    return chars
+
+
+def sort_on(char_count: tuple[str, int]) -> int:
+    return char_count[1]
+
+
+def chars_dict_to_sorted_list(num_chars_dict: dict[str, int]) -> list[tuple[str, int]]:
+    return sorted(num_chars_dict.items(), key=operator.itemgetter(1), reverse=True)
